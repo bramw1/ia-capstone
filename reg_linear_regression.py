@@ -78,12 +78,30 @@ def vendor_lasso(df):
 
 	X_train = pd.concat([train_cols.reset_index(drop = True), pd.DataFrame(encodecols, columns = feature_names).astype(int).reset_index(drop = True)], axis = 1)
 
-	lasso = Lasso()
+	'''lasso = Lasso()
 	lasso.set_params(alpha=1, normalize=True)
 	lasso.fit(X_train, y_train)
 	print('The intercept is %.4f' %(lasso.intercept_))
 	lassoCoef = pd.Series(lasso.coef_, index=X_train.columns).sort_values(ascending = False)
-	print('The slopes are \n%s' %(lassoCoef))
+	print('The slopes are \n%s' %(lassoCoef))'''
+
+	lasso = Lasso()
+	coefs = []
+
+	alphaRange = np.linspace(1e-3,20,20)
+	for alpha in alphaRange:
+	    lasso.set_params(alpha=alpha, normalize = True)  
+	    lasso.fit(X_train, y_train)
+	    coefs.append(lasso.coef_)
+
+
+	coefs = pd.DataFrame(np.array(coefs), columns=X_train.columns)
+
+	for name in coefs.columns:
+   		plt.plot(alphaRange, coefs[name])
+	plt.xlabel('Alpha')
+	plt.ylabel("Coefficients")
+	plt.title('Change of Lasso Slopes Varying Alpha')
 
 
 def ageproof_lasso(df):
@@ -110,11 +128,22 @@ def ageproof_lasso(df):
 	X_train = pd.concat([train_cols.reset_index(drop = True), pd.DataFrame(encodecols, columns = feature_names).astype(int).reset_index(drop = True)], axis = 1)
 
 	lasso = Lasso()
-	lasso.set_params(alpha=1, normalize=True)
-	lasso.fit(X_train, y_train)
-	print('The intercept is %.4f' %(lasso.intercept_))
-	lassoCoef = pd.Series(lasso.coef_, index=X_train.columns).sort_values(ascending = False)
-	print('The slopes are \n%s' %(lassoCoef))
+	coefs = []
+
+	alphaRange = np.linspace(1e-3,20,20)
+	for alpha in alphaRange:
+	    lasso.set_params(alpha=alpha, normalize = True)  
+	    lasso.fit(X_train, y_train)
+	    coefs.append(lasso.coef_)
+
+
+	coefs = pd.DataFrame(np.array(coefs), columns=X_train.columns)
+
+	for name in coefs.columns:
+   		plt.plot(alphaRange, coefs[name])
+	plt.xlabel('Alpha')
+	plt.ylabel("Coefficients")
+	plt.title('Change of Lasso Slopes Varying Alpha')
 
 
 def category_county_lasso(df):
@@ -141,8 +170,19 @@ def category_county_lasso(df):
 	X_train = pd.concat([train_cols.reset_index(drop = True), pd.DataFrame(encodecols, columns = feature_names).astype(int).reset_index(drop = True)], axis = 1)
 
 	lasso = Lasso()
-	lasso.set_params(alpha=1, normalize=True)
-	lasso.fit(X_train, y_train)
-	print('The intercept is %.4f' %(lasso.intercept_))
-	lassoCoef = pd.Series(lasso.coef_, index=X_train.columns).sort_values(ascending = False)
-	print('The slopes are \n%s' %(lassoCoef))
+	coefs = []
+
+	alphaRange = np.linspace(1e-3,20,20)
+	for alpha in alphaRange:
+	    lasso.set_params(alpha=alpha, normalize = True)  
+	    lasso.fit(X_train, y_train)
+	    coefs.append(lasso.coef_)
+
+
+	coefs = pd.DataFrame(np.array(coefs), columns=X_train.columns)
+
+	for name in coefs.columns:
+   		plt.plot(alphaRange, coefs[name])
+	plt.xlabel('Alpha')
+	plt.ylabel("Coefficients")
+	plt.title('Change of Lasso Slopes Varying Alpha')
